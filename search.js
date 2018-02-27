@@ -160,7 +160,8 @@ var system = {
 
 				url = system.replaceKeys(url,{
 					key: key,
-					rows: rows
+					rows: rows,
+					passkey: system.getSite(item.site).passkey
 				});
 
 				urls.push(url);
@@ -214,7 +215,7 @@ var system = {
 	getSiteHost: function(site)
 	{
 		if (site.host) return site.host;
-		return ("http://"+site.site)
+		return ("https://"+site.site)
 	},
 	addSearchResult: function(datas){
 		$.each(datas, function(index, item) {
