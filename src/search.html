@@ -20,9 +20,7 @@ body {
 	font-size: 13px;
 
 }
-#search-bar {
-	width: 260px;
-}
+
 #search-key {
 	width: 200px;
 }
@@ -62,11 +60,19 @@ tbody.list td{
 	height: 700px;
 	overflow-y: auto;
 }
+.status {
+	background-color: #FFFFCC;
+	padding:10px;
+	text-align:left;
+	border:2px solid #FF9900;font-size:15px;
+	color:#555555;
+}
 </style>
 <body>
 <div id="search-bar">
 	<input type="text" id="search-key" value=""/><button id="btnSearch" submit="true">搜索</button>
 	<div id="tags"></div>
+	<div id="status" class="status" style="display:none;"></div>
 </div>
 <h1></h1>
 <div id="search-result">

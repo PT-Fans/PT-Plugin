@@ -92,11 +92,42 @@ a.tag {
 	text-decoration: none;
 	background-color: #CA3B3B;
 }
+#version {
+	padding: 5px;
+	font-size: 10px;
+}
+
+#version::before {
+	content: "v";
+}
+
+.toptips{
+  display:none;
+  position:fixed;
+  -webkit-transform:translateZ(0);
+          transform:translateZ(0);
+  top:0;
+  left:0;
+  right:0;
+  padding:5px;
+  font-size:14px;
+  text-align:center;
+  color:#FFF;
+  z-index:5000;
+  word-wrap:break-word;
+  word-break:break-all;
+}
+.toptips_success{
+  background-color:#1AAD19;
+}
+.toptips_warn{
+  background-color:#E64340;
+}
 </style>
 <body>
 <div class="contentBox">
 	<div class="title-bar">
-		<div class="title">PT 助手 - 参数设置</div>
+		<div class="title">PT 助手 - 参数设置<sup id="version"></sup></div>
 		<div class="button-bar">
 			<button id="button-save">全部保存</button><br/>
 			<button id="button-save-and-close">保存并关闭</button>
@@ -467,6 +498,7 @@ a.tag {
 				<li>设置每个站点是否启用搜索及“站点类型”及“标签”；</li>
 				<li>以上步骤完成后，即可进行种子搜索；</li>
 			</ul>
+			<div>详细说明请参考：<a href="https://github.com/ronggang/PT-Plugin/wiki">PT 助手 Wiki</a></div>
 		</div>
 	</div>
 	<button id="button-close" style="display:none;">关闭</button>

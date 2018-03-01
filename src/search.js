@@ -4,27 +4,25 @@ var system = {
 		siteTypes: new Array()
 	},
 	statusMessageBox: null,
-	init: function(){
-		$("#btnSearch").click(function(event) {
+	init: function () {
+		$("#btnSearch").click(function (event) {
 			system.search($("#search-key").val());
 		});
 
-		$("#search-key").on("keyup",function(e){
-			if (e.keyCode==13)
-			{
+		$("#search-key").on("keyup", function (e) {
+			if (e.keyCode == 13) {
 				system.search(this.value);
 			}
 		});
 
 		this.sendMessage({
 			action: "read-config"
-		}, function(config) {
+		}, function (config) {
 			//alert(config.sites.length);
 			system.config = config;
 			system.initTags();
 			var key = location.href.getQueryString("key");
-			if (key)
-			{
+			if (key) {
 				system.search(key);
 			}
 		});
@@ -32,11 +30,10 @@ var system = {
 		this.resize();
 	},
 	// 初始标签
-	initTags: function() {
+	initTags: function () {
 		var tags = {};
-		if ($.isArray(this.config.search.checkedTags))
-		{
-			$.each(this.config.search.checkedTags, function(index,item){
+		if ($.isArray(this.config.search.checkedTags)) {
+			$.each(this.config.search.checkedTags, function (index, item) {
 				tags[item] = true;
 			});
 		}
@@ -44,41 +41,43 @@ var system = {
 		var parent = $("#tags");
 		parent.empty();
 
-		$.each(this.config.search.tags, function(index,item){
-			$("<input type='checkbox' id='checkbox_"+index+"'/>").attr("tag",item).prop("checked",(tags[item]?true:false)).appendTo(parent);
-			$("<label for='checkbox_"+index+"'/>").html(item).appendTo(parent);
+		$.each(this.config.search.tags, function (index, item) {
+			$("<input type='checkbox' id='checkbox_" + index + "'/>").attr("tag", item).prop("checked", (tags[item] ? true : false)).appendTo(parent);
+			$("<label for='checkbox_" + index + "'/>").html(item).appendTo(parent);
 		});
 	},
-	search: function(key){
+	search: function (key) {
 		$("#tbody-result").empty();
 		this.setSearchKey(key);
 		this.sendMessage({
 			action: "read-config"
-		}, function(config) {
+		}, function (config) {
 			//alert(config.sites.length);
 			system.config = config;
-			system.searchTorrent(key,function(result){
+			system.searchTorrent(key, function (result) {
 				log(result);
 			});
 		});
 	},
-	setSearchKey: function(key){
+	setSearchKey: function (key) {
 		$("#search-key").val(key);
 		this.config.search.key = key;
-		this.config.search.checkedTags = $.map($("#tags input:checked"),function(n){return $(n).attr("tag");});
+		this.config.search.checkedTags = $.map($("#tags input:checked"), function (n) {
+			return $(n).attr("tag");
+		});
 		chrome.extension.sendMessage({
 			action: "save-config",
 			config: this.config
 		});
 	},
-	sendMessage: function(options, callback) {
+	sendMessage: function (options, callback) {
 		if (callback) {
 			chrome.extension.sendMessage(options, callback);
 		} else {
 			chrome.extension.sendMessage(options);
 		}
 	},
-	requestMessage: function(message, callback) {
+	requestMessage: function (message, callback) {
 		switch (message.action.toLowerCase()) {
 			case "search-torrent":
 				$("#search-key").val(message.key);
@@ -87,11 +86,10 @@ var system = {
 
 		}
 	},
-	getSiteType: function(name){
+	getSiteType: function (name) {
 		var type = "";
-		$.each(this.config.siteTypes,function(index,item){
-			if (item.name==name)
-			{
+		$.each(this.config.siteTypes, function (index, item) {
+			if (item.name == name) {
 				type = item;
 				return;
 			}
@@ -99,11 +97,10 @@ var system = {
 
 		return type;
 	},
-	getSearchPage: function(name) {
+	getSearchPage: function (name) {
 		var page = "";
-		$.each(this.config.siteTypes,function(index,item){
-			if (item.name==name)
-			{
+		$.each(this.config.siteTypes, function (index, item) {
+			if (item.name == name) {
 				page = item.searchPage;
 				return;
 			}
@@ -111,28 +108,25 @@ var system = {
 
 		return page;
 	},
-	getSite: function(name){
+	getSite: function (name) {
 		var site = null;
 		for (var i = 0; i < this.config.sites.length; i++) {
 			site = this.config.sites[i];
-			if (site.site==name)
-			{
+			if (site.site == name) {
 				break;
 			}
 		};
 		return site;
 	},
-	checkTag: function(site) {
+	checkTag: function (site) {
 		if (!$.isArray(site.tags)) return false;
-		if (site.tags.length==0) return false;
+		if (site.tags.length == 0) return false;
 
 		var tags = {};
 		var result = false;
-		if ($.isArray(this.config.search.checkedTags))
-		{
-			$.each(this.config.search.checkedTags, function(index,item){
-				if ($.inArray(item,site.tags)!=-1)
-				{
+		if ($.isArray(this.config.search.checkedTags)) {
+			$.each(this.config.search.checkedTags, function (index, item) {
+				if ($.inArray(item, site.tags) != -1) {
 					result = true;
 				}
 			});
@@ -141,24 +135,24 @@ var system = {
 		return result;
 	},
 	// 搜索种子
-	searchTorrent: function(key,callback){
+	searchTorrent: function (key, callback) {
 		var rows = this.config.search.rows;
-		if (isNaN(parseInt(rows)))
-		{
+		if (isNaN(parseInt(rows))) {
 			rows = 5;
 		}
 		var urls = [];
 		var scripts = [];
 		var sites = [];
-		
-		$.each(this.config.sites, function(index, item) {
-			if (item.allowSearch&&system.checkTag(item))
-			{
+		var errors = [];
+		$("#status").hide();
+
+		$.each(this.config.sites, function (index, item) {
+			if (item.allowSearch && system.checkTag(item)) {
 				var siteType = system.getSiteType(item.type);
-				var url = system.getSiteHost(item)+siteType.searchPage;
+				var url = system.getSiteHost(item) + siteType.searchPage;
 				var script = siteType.getSearchResultScript;
 
-				url = system.replaceKeys(url,{
+				url = system.replaceKeys(url, {
 					key: key,
 					rows: rows,
 					passkey: system.getSite(item.site).passkey
@@ -170,7 +164,6 @@ var system = {
 			}
 		});
 
-
 		doSearch(urls, urls.length, callback);
 
 		function doSearch(items, count, callback) {
@@ -178,25 +171,33 @@ var system = {
 			var url = urls.shift();
 
 			if (!url) {
-				system.showStatusMessage("搜索完成。",6);
+				system.showStatusMessage("搜索完成。", 6);
+				if (errors.length > 0) {
+					$("#status").html(errors.join("<br/>")).show();
+					setTimeout(function(){
+						$("#status").fadeOut();
+					}, 5000);
+				}
 				return;
 			}
-			system.showStatusMessage("正在搜索 ["+sites[index]+"]..."+(index+1)+"/"+count+".",0);
+			var site = sites[index];
+			system.showStatusMessage("正在搜索 [" + site + "]..." + (index + 1) + "/" + count + ".", 0);
 			var settings = {
 				url: url,
-				success:function(result,textStatus)
-				{
+				success: function (result, textStatus) {
 					doSearch(urls, count, callback);
-					var script = scripts[index];
-					var site = sites[index];
+					if (result && (typeof result=="string" && result.length > 100) || (typeof result == "object")) {
+						var script = scripts[index];
 
-					if (script)
-					{
-						eval(script);
+						if (script) {
+							eval(script);
+						}
+					} else {
+						errors.push(site + " 搜索异常。[" + result + "]");
 					}
 				},
-				error: function()
-				{
+				error: function () {
+					errors.push(site + " 搜索失败。");
 					doSearch(urls, count, callback);
 				}
 			};
@@ -204,26 +205,24 @@ var system = {
 			jQuery.ajax(settings);
 		}
 	},
-	replaceKeys: function(source,keys)
-	{
-		$.each(keys,function(key,value){
-			source = source.replace("\$"+key+"\$",value);
+	replaceKeys: function (source, keys) {
+		$.each(keys, function (key, value) {
+			source = source.replace("\$" + key + "\$", value);
 		});
 
 		return source;
 	},
-	getSiteHost: function(site)
-	{
+	getSiteHost: function (site) {
 		if (site.host) return site.host;
-		return ("https://"+site.site)
+		return ("https://" + site.site)
 	},
-	addSearchResult: function(datas){
-		$.each(datas, function(index, item) {
-			if (index<system.config.search.rows)
+	addSearchResult: function (datas) {
+		$.each(datas, function (index, item) {
+			if (index < system.config.search.rows)
 				system.addRow(item);
 		});
 	},
-	addRow: function(data) {
+	addRow: function (data) {
 		var body = $("#tbody-result");
 		var index = body[0].rows.length + 1;
 		var row = $("<tr/>").appendTo(body);
@@ -231,11 +230,11 @@ var system = {
 		// 序号
 		$("<td/>").css("textAlign", "center").html(index).appendTo(row);
 		// 标题
-		$("<a/>").attr("href",data.link).html(data.title).attr("target","_blank").appendTo($("<td/>").appendTo(row));
+		$("<a/>").attr("href", data.link).html(data.title).attr("target", "_blank").appendTo($("<td/>").appendTo(row));
 		// 操作
 		var buttons = $("<td/>").css("textAlign", "center").appendTo(row);
 		// 发送到下载服务器
-		$("<div/>").click(function(){
+		$("<div/>").click(function () {
 			var folder = null;
 			var url = data.downloadURL;
 			var site = system.getSite(data.source);
@@ -250,11 +249,11 @@ var system = {
 				action: "send-url-to-client",
 				url: url,
 				folder: folder
-			}, function(result) {
+			}, function (result) {
 				system.showStatusMessage(result.msg, 5);
 			});
-		}).attr("class","link sendToDownload").attr("title","发送到下载服务器").appendTo(buttons);
-		log(data.downloadURL);
+		}).attr("class", "link sendToDownload").attr("title", "发送到下载服务器").appendTo(buttons);
+		// log(data.downloadURL);
 		// 大小
 		$("<td/>").css("textAlign", "right").html(data.size).appendTo(row);
 		// 发布人
@@ -264,7 +263,7 @@ var system = {
 		// 来源
 		$("<td/>").html(data.source).appendTo(row);
 	},
-	showStatusMessage: function(msg, time) {
+	showStatusMessage: function (msg, time) {
 		if (!this.statusMessageBox) {
 			this.statusMessageBox = $("<div/>").css({
 				top: -500,
@@ -293,20 +292,20 @@ var system = {
 			this.statusMessageBox.stop().show().fadeOut(time);
 		}
 	},
-	resize: function(){
-		$("#search-result").height($(window).height()-$("#search-result").position().top-10);
+	resize: function () {
+		$("#search-result").height($(window).height() - $("#search-result").position().top - 10);
 	}
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
 	system.init();
 });
 
-$(window).resize(function() {
+$(window).resize(function () {
 	system.resize();
 })
 
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 	system.requestMessage(message, sendResponse);
 	return true;
 });

@@ -4,6 +4,7 @@
 			sites: new Array(),
 			siteTypes: new Array()
 		},
+		toptipsTimer: null,
 		init: function() {
 			$("button").on("click",function(event){
 				event.preventDefault();
@@ -145,6 +146,7 @@
 					config: system.config
 				}, function() {
 					button.prop("disabled", false);
+					system.showSuccessMsg("参数已备份至Google 帐户");
 				});
 			});
 
@@ -155,10 +157,12 @@
 				system.sendMessage({
 					action: "read-config-from-google"
 				}, function(result) {
+					debugger;
 					if (result) {
 						system.config = result;
 						system.initConfig();
 						system.saveConfig(true);
+						system.showSuccessMsg("参数已从Google 帐户中恢复");
 					} else {
 						alert("加载失败或 Google 帐户中无配置信息。");
 					}
@@ -176,10 +180,12 @@
 							system.config = JSON.parse(e.target.result);
 							system.initConfig();
 							system.saveConfig(true);
+							system.showSuccessMsg("参数已恢复");
 						}
 
 					};
 					r.onerror = function() {
+						system.showErrorMsg("配置信息加载失败");
 						console.log("配置信息加载失败");
 					};
 					r.readAsText(restoreFile.files[0]);
@@ -261,6 +267,7 @@
 			$("#torrentDetailPages").val(this.config.contextMenuRules.torrentDetailPages.join("\n"));
 			$("#torrentListPages").val(this.config.contextMenuRules.torrentListPages.join("\n"));
 			$("#torrentLinks").val(this.config.contextMenuRules.torrentLinks.join("\n"));
+			$("#version").html(chrome.app.getDetails().version);
 		},
 		initTransmissionConfig: function() {
 			var inputs = $("#table-transmission-options").find("input");
@@ -345,6 +352,7 @@
 		},
 		// 初始化搜索分类标签
 		initSearchConfig: function() {
+			$("#search-type-tags").empty();
 			$.each(this.config.search.tags,function(index,item){
 				system.addSearchTypeTag(item,true);
 			});
@@ -685,6 +693,24 @@
 			} catch (e) {
 				console.log(e.toString());
 			}
+		},
+		showStatusMessage: function(msg, time, status) {
+			time = time || 3000;
+			status = status || "success";
+			if (!this.toptips) {
+				this.toptips = $("<div class='toptips toptips_" + status + "'/>").appendTo(document.body);
+			}
+			clearTimeout(this.toptipsTimer);
+			this.toptips.html(msg).show();
+			this.toptipsTimer = setTimeout(function(){
+				system.toptips.hide()
+			}, time);
+		},
+		showSuccessMsg: function(msg, time) {
+			this.showStatusMessage(msg, time, "success");
+		},
+		showErrorMsg: function(msg, time) {
+			this.showStatusMessage(msg, time, "warn");
 		}
 	};
 
