@@ -349,6 +349,11 @@ var system = {
 				return;
 			}
 
+			if (!system.site.passkey) {
+				system.showStatusMessage("请先设置站点密钥（Passkey）。");
+				return;
+			}
+
 			var url = e.dataTransfer.getData('text/plain');
 			if (url) {
 				if (system.site.dropScript)
@@ -379,7 +384,7 @@ var system = {
 					folder = system.site.folders[0];
 				}
 
-				system.showStatusMessage("正在发送链接地址 " + url + " 到下载服务器", 0);
+				system.showStatusMessage("正在发送链接地址 " + (url.replace(system.site.passkey, "***")) + " 到下载服务器", 0);
 				chrome.extension.sendMessage({
 					action: "send-url-to-client",
 					url: url,
