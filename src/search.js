@@ -214,7 +214,7 @@ var system = {
 	},
 	getSiteHost: function (site) {
 		if (site.host) return site.host;
-		return ("https://" + site.site)
+		return ((site.disableHttps===true?"http://":"https://") + site.site);
 	},
 	addSearchResult: function (datas) {
 		$.each(datas, function (index, item) {

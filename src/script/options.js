@@ -57,7 +57,8 @@
 					folders: new Array(),
 					type: parent.find("#type").val(),
 					allowSearch: parent.find("#allowSearch").prop("checked"),
-					tags: tags
+					tags: tags,
+					disableHttps: parent.find("#disableHttps").prop("checked")
 				};
 
 				var siteIndex = system.getSiteIndex(site.site);
@@ -65,13 +66,15 @@
 					system.config.sites.push(site);
 					system.addSiteToRow(site);
 				} else {
-					system.config.sites[siteIndex].passkey = site.passkey;
-					system.config.sites[siteIndex].detailScript = site.detailScript;
-					system.config.sites[siteIndex].listAllTorrentUrlScript = site.listAllTorrentUrlScript;
-					system.config.sites[siteIndex].dropScript = site.dropScript;
-					system.config.sites[siteIndex].type = site.type;
-					system.config.sites[siteIndex].allowSearch = site.allowSearch;
-					system.config.sites[siteIndex].tags = site.tags;
+					var _config = system.config.sites[siteIndex];
+					_config.passkey = site.passkey;
+					_config.detailScript = site.detailScript;
+					_config.listAllTorrentUrlScript = site.listAllTorrentUrlScript;
+					_config.dropScript = site.dropScript;
+					_config.type = site.type;
+					_config.allowSearch = site.allowSearch;
+					_config.tags = site.tags;
+					_config.disableHttps = site.disableHttps;
 					system.initSites();
 				}
 
@@ -453,9 +456,18 @@
 			initTags();
 
 			// 允许搜索
-			$("<input type='checkbox'/>").prop("checked", site.allowSearch)
+			$("<input type='checkbox' style='width:100%;'/>").prop("checked", site.allowSearch)
 				.click(function() {
 					system.config.sites[rowIndex - 1].allowSearch = this.checked;
+					system.saveConfig();
+					//system.initSites();
+				})
+				.appendTo($("<td/>").css("textAlign", "center").appendTo(row));
+
+			// 禁用HTTPS
+			$("<input type='checkbox' style='width:100%;'/>").prop("checked", site.disableHttps)
+				.click(function() {
+					system.config.sites[rowIndex - 1].disableHttps = this.checked;
 					system.saveConfig();
 					//system.initSites();
 				})
@@ -466,12 +478,19 @@
 				.data("index", rowIndex - 1)
 				.click(function() {
 					var parent = $("#tab-sites");
-					var fields = ["site", "passkey", "detailScript", "listAllTorrentUrlScript", "dropScript", "type", "allowSearch"];
+					var fields = ["site", "passkey", "detailScript", "listAllTorrentUrlScript", "dropScript", "type", "allowSearch", "disableHttps"];
 					var index = $(this).data("index");
 					var site = system.config.sites[index];
 					$.each(fields, function(index, item) {
 						switch (item) {
 							case "allowSearch":
+								parent.find("#" + item).prop("checked", site[item]);
+								break;
+
+							case "disableHttps":
+								if (site[item]===undefined) {
+									site[item]=false;
+								}
 								parent.find("#" + item).prop("checked", site[item]);
 								break;
 
