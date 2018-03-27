@@ -239,7 +239,7 @@ var system = {
 		{
 			var torrents = jQuery("a[href*='download']").toArray();
 			urls = jQuery.map(torrents, function(n) {
-				return system.site.host + jQuery(n).attr("href") + "&passkey=" + system.site.passkey;
+				return system.site.host + jQuery(n).attr("href") + "&passkey=" + system.site.passkey + (system.site.disableHttps?"":"&https=1");
 			});
 		}
 
@@ -372,7 +372,8 @@ var system = {
 					id = url.getQueryString("id");
 					if (id) {
 						if (system.site && system.config.droptosend) {
-							url = system.site.host + "download.php?id=" + id + "&passkey=" + system.site.passkey;
+							// 如果站点没有配置禁用https，则默认添加https链接
+							url = system.site.host + "download.php?id=" + id + "&passkey=" + system.site.passkey + (system.site.disableHttps?"":"&https=1");
 						}
 					}
 				}

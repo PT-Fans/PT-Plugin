@@ -322,13 +322,13 @@ var system = {
 								});
 								chrome.tabs.sendMessage(tab.id, {
 									action: "show-message",
-									content: address + "已复制到剪切板。"
+									content: address.replace(item.passkey, "***") + "已复制到剪切板。"
 								});
 							});
 						}
 						else
 						{
-							var address = tab.url.substr(0, _indexOf) + item.site + "/download.php?id=" + data.linkUrl.getQueryString("id") + "&passkey=" + item.passkey;
+							var address = tab.url.substr(0, _indexOf) + item.site + "/download.php?id=" + data.linkUrl.getQueryString("id") + "&passkey=" + item.passkey + (item.disableHttps?"":"&https=1");
 
 							system.requestMessage({
 								action: "toclipboard",
@@ -336,7 +336,7 @@ var system = {
 							});
 							chrome.tabs.sendMessage(tab.id, {
 								action: "show-message",
-								content: address + "已复制到剪切板。"
+								content: address.replace(item.passkey, "***") + "已复制到剪切板。"
 							});
 						}
 						//console.log(address);
@@ -379,11 +379,14 @@ var system = {
 								action: "get-detail-page-torrent-url",
 								script: item.detailScript
 							}, function(url) {
-								url = url.replace("\$passkey\$", item.passkey);
-								system.execSendUrlToClient(url, folder, tab);
+								if (url) {
+									url = url.replace("\$passkey\$", item.passkey);
+									system.execSendUrlToClient(url, folder, tab);
+								}								
 							});
 						} else {
-							address = tab.url.substr(0, _indexOf) + item.site + "/download.php?id=" + tab.url.getQueryString("id") + "&passkey=" + item.passkey;
+							// 如果站点没有配置禁用https，则默认添加https链接
+							address = tab.url.substr(0, _indexOf) + item.site + "/download.php?id=" + tab.url.getQueryString("id") + "&passkey=" + item.passkey + (item.disableHttps?"":"&https=1");
 							system.execSendUrlToClient(address, folder, tab);
 						}
 
