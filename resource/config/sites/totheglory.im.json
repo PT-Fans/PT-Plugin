@@ -1,0 +1,11 @@
+{
+	"allowSearch": true,
+	"detailScript": "(new RegExp(/t\\/(\\d+)\\//g)).exec(location.href);var id=RegExp.$1;(\"$input-host$rssdd.php?par=\"+(new Base64).encode(\"vvv\"+id+\"|||$input-passkey$zz\"));",
+	"dropScript": "(new RegExp(/t\\/(\\d+)\\//g)).exec(\"$input-url$\");var id=RegExp.$1;(\"$host$rssdd.php?par=\"+(new Base64).encode(\"vvv\"+id+\"|||$input-passkey$zz\"));",
+	"folders": [""],
+	"listAllTorrentUrlScript": "$.map($(\"a[href^='/t/']\").toArray(),function(n){(new RegExp(/t\\/(\\d+)\\//g)).exec($(n).attr(\"href\"));var id=RegExp.$1;return (\"$host$rssdd.php?par=\"+(new Base64).encode(\"vvv\"+id+\"|||$input-passkey$zz\"));});",
+	"passkey": "",
+	"site": "totheglory.im",
+	"tags": ["电影", "游戏"],
+	"type": "TTG"
+}

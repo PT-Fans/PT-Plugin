@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="jquery/jquery-ui-1.10.3.custom.min.js"></script>
 	<script type="text/javascript" src="script/plugin/FileSaver.js"></script>
 	<script type="text/javascript" src="script/options.js"></script>
+	<script type="text/javascript" src="i18n.js"></script>
 	<!-- -->
 </head>
 <style type="text/css">
@@ -127,28 +128,28 @@ a.tag {
 <body>
 <div class="contentBox">
 	<div class="title-bar">
-		<div class="title">PT 助手 - 参数设置<sup id="version"></sup></div>
+		<div class="title"><span system-lang="manifest_appName">PT 助手</span> - <span system-lang="options_title">参数设置</span><sup id="version"></sup></div>
 		<div class="button-bar">
-			<button id="button-save">全部保存</button><br/>
-			<button id="button-save-and-close">保存并关闭</button>
+			<button id="button-save" system-lang="options_button_save_all">全部保存</button><br/>
+			<button id="button-save-and-close" system-lang="options_button_save_and_close">保存并关闭</button>
 		</div>
 	</div>
 	<div id="tabs">
 		<ul>
-			<li><a href="#tab-base">常规</a></li>
-			<li><a href="#tab-rules">规则</a></li>
-			<li><a href="#tab-site-types">站点类型</a></li>
-			<li><a href="#tab-sites">站点设置</a></li>
-			<li><a href="#tab-clients">下载服务器</a></li>
-			<li><a href="#tab-search">搜索相关</a></li>
-			<li><a href="#tab-backup">备份/恢复</a></li>
-			<li><a href="#tab-help">帮助/说明</a></li>
+			<li><a href="#tab-base" system-lang="options_tab_normal">常规</a></li>
+			<li><a href="#tab-rules" system-lang="options_tab_rules">规则</a></li>
+			<li><a href="#tab-site-types" system-lang="options_tab_site_types">站点类型</a></li>
+			<li><a href="#tab-sites" system-lang="options_tab_sites">站点设置</a></li>
+			<li><a href="#tab-clients" system-lang="options_tab_clients">下载服务器</a></li>
+			<li><a href="#tab-search" system-lang="options_tab_search">搜索相关</a></li>
+			<li><a href="#tab-backup" system-lang="options_tab_backup">备份/恢复</a></li>
+			<li><a href="#tab-help" system-lang="options_tab_help">帮助/说明</a></li>
 		</ul>
 		<div id="tab-base">
-			<h1>常规</h1>
+			<h1 system-lang="options_tab_normal">常规</h1>
 			<table>
 				<tr>
-					<td>默认下载服务器：</td>
+					<td system-lang="options_text_defalut_server">默认下载服务器：</td>
 					<td>
 						<select id="defaultclient">
 							<option value="transmission" selected="selected">Transmission</option>
@@ -158,10 +159,10 @@ a.tag {
 					</td>
 				</tr>
 				<tr>
-					<td>插件图标显示页面：</td>
+					<td system-lang="options_text_show_plugin_icon_page">插件图标显示页面：</td>
 					<td>
 						<textarea style="width:100%" rows="6" id="pluginIconShowPages" savedtoclear="1"></textarea>
-						<span>多个页面用回车分隔</span>
+						<span system-lang="options_text_show_plugin_icon_page_tips">多个页面用回车分隔</span>
 					</td>
 				</tr>
 				<tr>
@@ -169,88 +170,104 @@ a.tag {
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="checkbox" id="droptosend"/><label for="droptosend">启用拖放链接到插件图标时，直接发送链接到下载服务器</label>
+						<input type="checkbox" id="droptosend"/><label for="droptosend" system-lang="options_text_allow_drop_to_send">启用拖放链接到插件图标时，直接发送链接到下载服务器</label>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="checkbox" id="exceedSizeToConfirm"/><label for="exceedSizeToConfirm">当前页面种子总体积超过</label>
+						<input type="checkbox" id="exceedSizeToConfirm"/><label for="exceedSizeToConfirm" system-lang="options_text_exceed_size_to_confirm">当前页面种子总体积超过</label>
 						<input id="exceedSize" style="width:50px;"/>
 						<select id="exceedSizeUnit">
 							<option value="MB">MB</option>
 							<option value="GB" selected="selected">GB</option>
 							<option value="TB">TB</option>
 						</select>
-						<label>时，需要我确认。</label>
+						<label system-lang="options_text_exceed_size_to_confirm_1">时，需要我确认。</label>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="checkbox" id="allowSelectionTextSearch"/><label for="allowSelectionTextSearch">启用页面内容选择搜索</label>
+						<input type="checkbox" id="allowSelectionTextSearch"/><label for="allowSelectionTextSearch" system-lang="options_text_selection_text_search">启用页面内容选择搜索</label>
 					</td>
 				</tr>
 			</table>
 		</div>
 		<div id="tab-rules">
-			<h1>页面规则</h1>
+			<h1 system-lang="options_text_page_rules">页面规则</h1>
 			<table>
 				<tr>
-					<td width="30%">种子列表页面规则：</td>
+					<td width="30%" system-lang="options_text_torrent_page_rules">种子列表页面规则：</td>
 					<td width="70%" colspan="2">
 						<textarea style="width:100%" rows="6" id="torrentListPages" savedtoclear="1"></textarea>
 					</td>
 				</tr>
 				<tr>
-					<td>种子详情页面规则：</td>
+					<td system-lang="options_text_torrent_detail_page_rules">种子详情页面规则：</td>
 					<td colspan="2">
 						<textarea style="width:100%" rows="6" id="torrentDetailPages" savedtoclear="1"></textarea>
 					</td>
 				</tr>
 				<tr>
-					<td>种子链接规则：</td>
+					<td system-lang="options_text_torrent_links_rules">种子链接规则：</td>
 					<td colspan="2">
 						<textarea style="width:100%" rows="6" id="torrentLinks" savedtoclear="1"></textarea>
 					</td>
 				</tr>
 			</table>
-			<span>多个规则用回车分隔</span>
+			<span system-lang="options_text_page_rules_tips">多个规则用回车分隔</span>
 		</div>
 		<div id="tab-site-types">
-			<h1>当前站点类型列表 <button id="button-add-new-site-type">新增</button></h1>
+			<h1><span system-lang="options_text_site_type_list">当前站点类型列表</span> <button id="button-add-new-site-type" system-lang="options_button_addNew">新增</button> <button id="button-add-import-site-type" system-lang="options_button_import">导入</button></h1>
 			<div id="table-site-type" style="display:none;">
-				<table >
+				<table style="width:100%;">
 					<tr>
-						<td>名称：</td>
-						<td><input type="text" id="name" savedtoclear="1" style="width:120px;"/></td>
-						<td></td>
-						<td></td>
+						<td system-lang="options_text_site_type_name" style="width:10%;">名称：</td>
+						<td style="width:40%;"><input type="text" id="name" savedtoclear="1" style="width:120px;"/></td>
+						<td style="width:10%;"></td>
+						<td style="width:40%;"></td>
 					</tr>
 					<tr>
-						<td>搜索页面：</td>
-						<td><input type="text" id="searchPage" savedtoclear="1" style="width:500px;" /></td>
-						<td>返回类型：</td>
+						<td system-lang="">插件图标显示页面：</td>
+						<td colspan="3"><textarea style="width:100%" rows="3" id="pluginIconShowPages" savedtoclear="1"></textarea></td>
+					</tr>
+					<tr>
+						<td system-lang="">种子列表页面：</td>
+						<td colspan="3"><textarea style="width:100%" rows="3" id="torrentListPages" savedtoclear="1"></textarea></td>
+					</tr>
+					<tr>
+						<td system-lang="">种子详情页面：</td>
+						<td colspan="3"><textarea style="width:100%" rows="3" id="torrentDetailPages" savedtoclear="1"></textarea></td>
+					</tr>
+					<tr>
+						<td system-lang="">种子链接页面：</td>
+						<td colspan="3"><textarea style="width:100%" rows="3" id="torrentLinks" savedtoclear="1"></textarea></td>
+					</tr>
+					<tr>
+						<td system-lang="options_text_site_type_search_page">搜索页面：</td>
+						<td><input type="text" id="searchPage" savedtoclear="1" style="width:100%;" /></td>
+						<td system-lang="options_text_site_type_result_type">返回类型：</td>
 						<td>
 							<select id="searchResultType">
 								<option value="html">HTML</option>
 								<option value="xml">XML</option>
 								<option value="json">JSON</option>
-								<option value="text">文本</option>
+								<option value="text" system-lang="options_text_site_type_result_type_text">文本</option>
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td>获取搜索结果脚本：</td>
+						<td system-lang="options_text_site_type_get_search_result_script">获取搜索结果脚本：</td>
 						<td colspan="3"><textarea style="width:100%" rows="20" id="getSearchResultScript" savedtoclear="1"></textarea></td>
 					</tr>
 					<tr>
-						<td>获取种子大小脚本：<br/>(种子列表页)</td>
+						<td><span system-lang="options_text_site_type_get_total_size_script">获取种子大小脚本：</span><br/><span system-lang="options_text_site_type_get_total_size_script_tips">(种子列表页)</span></td>
 						<td colspan="3"><textarea style="width:100%" rows="3" id="getTorrentTotalSizeScript" savedtoclear="1"></textarea></td>
 					</tr>
 					<tr>
 						<td></td>
 						<td colspan="3">
-							<button id="button-site-type-save">保存</button>
-							<button id="button-site-type-cancel">取消</button>
+							<button id="button-site-type-save" system-lang="options_button_save">保存</button>
+							<button id="button-site-type-cancel" system-lang="options_button_cancel">取消</button>
 						</td>
 					</tr>
 				</table>
@@ -260,9 +277,9 @@ a.tag {
 				<table width="100%">
 					<thead>
 						<tr class="head">
-							<td width="50px;">序号</td>
-							<td>名称</td>
-							<td>操作</td>
+							<td width="50px;" system-lang="options_text_table_head_no">序号</td>
+							<td system-lang="options_text_table_head_name">名称</td>
+							<td system-lang="options_text_table_head_action">操作</td>
 						</tr>
 					</thead>
 					<tbody id="tbody-site-types" class="list">
@@ -272,10 +289,10 @@ a.tag {
 		</div>
 		<div id="tab-sites">
 			<div id="table-site" style="display:none;">
-				<h1>站点配置</h1>
+				<h1 system-lang="options_tab_sites">站点配置</h1>
 				<table >
 					<tr>
-						<td>站点：</td>
+						<td system-lang="options_text_site">站点：</td>
 						<td><input type="text" id="site" savedtoclear="1" style="width:120px;"/><input type="checkbox" id="disableHttps"/><label for="disableHttps">本站不支持HTTPS</label></td>
 						<td>类型：</td>
 						<td><select id="type"></select></td>
@@ -323,7 +340,7 @@ a.tag {
 					</tr>
 				</table>
 			</div>
-			<h1>当前站点列表 <button id="button-add-new-site">新增</button></h1>
+			<h1>当前站点列表 <button id="button-add-new-site">新增</button> <button id="button-add-import-site" system-lang="options_button_import">导入</button></h1>
 			<div style="max-height:400px;overflow:auto;">
 				<table width="100%">
 					<thead>
@@ -478,27 +495,6 @@ a.tag {
 			</div>
 		</div>
 		<div id="tab-help">
-			<h1>操作步骤</h1>
-			<ul>
-				<li>设置站点信息；</li>
-				<li>设置下载服务器（PT客户端）；</li>
-				<li>以上两步完成之后才可以进行种子下载、推送等操作；</li>
-				<li>如需要更加个性化，可设置其他相关信息，如目录等；</li>
-			</ul>
-			<h1>使用要点</h1>
-			<ul>
-				<li>在种子列表页面，可以点击右侧的图标，进行“复制下载链接”、“将当前页的种子推送到下载服务器”等操作；</li>
-				<li>在种子列表页面，在资源名称或下载链接上点击右键可将当前种子推送到下载服务器的指定目录；</li>
-				<li>在种子列表页面，拖放资源名称链接到右侧的图标上，可将当前种子直接推送下载服务器；</li>
-				<li>在种子详情页面，可以点击右键推送当前种子到下载服务器；</li>
-			</ul>
-			<h1>关于搜索</h1>
-			<ul>
-				<li>要使用搜索功能，需先配置“站点类型”；</li>
-				<li>在搜索相关设置中添加“标签”；</li>
-				<li>设置每个站点是否启用搜索及“站点类型”及“标签”；</li>
-				<li>以上步骤完成后，即可进行种子搜索；</li>
-			</ul>
 			<div>详细说明请参考：<a href="https://github.com/ronggang/PT-Plugin/wiki">PT 助手 Wiki</a></div>
 		</div>
 	</div>

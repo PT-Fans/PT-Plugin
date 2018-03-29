@@ -455,13 +455,18 @@ chrome.extension.sendMessage({
 			if (item.site == window.location.hostname) {
 				system.site = item;
 				system.site.host = window.location.protocol + "//" + window.location.host + "/";
+				system.siteType = config.siteTypes[system.getSiteTypeIndex(item.type)];
 				config.sites[index] = system.site;
+				return;
 			}
 		});
 	}
 
+	// 优先使用站点类型配置的页面
+	var pages = system.siteType.pluginIconShowPages || config.pluginIconShowPages;
+
 	// 判断是否显示图标
-	$.each(config.pluginIconShowPages, function(index, item) {
+	$.each(pages, function(index, item) {
 		if (document.location.pathname.indexOf(item) != -1) {
 			system.init();
 			return;

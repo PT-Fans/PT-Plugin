@@ -1,0 +1,12 @@
+{
+	"allowSearch": true,
+	"defaultFolder": "",
+	"detailScript": "",
+	"dropScript": "",
+	"folders": [],
+	"listAllTorrentUrlScript": "",
+	"passkey": "",
+	"site": "open.cd",
+	"tags": ["音乐"],
+	"type": "NexusPHP"
+}

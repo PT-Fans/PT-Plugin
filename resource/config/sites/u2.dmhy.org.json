@@ -1,0 +1,11 @@
+{
+	"allowSearch": true,
+	"detailScript": "",
+	"dropScript": "",
+	"folders": [""],
+	"listAllTorrentUrlScript": "",
+	"passkey": "",
+	"site": "u2.dmhy.org",
+	"tags": ["动漫"],
+	"type": "NexusPHP"
+}

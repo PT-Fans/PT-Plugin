@@ -1,39 +1,39 @@
 {
 	"manifest_appName": {
-		"message": "PT 助手"
+		"message": "PT Plugin"
 	},
 	"manifest_shortName": {
-		"message": "PT 助手"
+		"message": "PT Plugin"
 	},
 	"manifest_appDescription": {
 		"message": "适用于各PT站，可使下载种子等各项操作变化更简单、快捷。配合下载服务器（如Transmission、µTorrent等），可一键下载指定的种子。"
 	},
 	"options_title": {
-		"message": "参数设置"
+		"message": "Options"
 	},
 	"options_tab_normal": {
-		"message": "常规"
+		"message": "Normal"
 	},
 	"options_tab_rules": {
-		"message": "规则"
+		"message": "Rules"
 	},
 	"options_tab_site_types": {
-		"message": "站点类型"
+		"message": "Site Types"
 	},
 	"options_tab_sites": {
-		"message": "站点设置"
+		"message": "Sites"
 	},
 	"options_tab_clients": {
-		"message": "下载服务器"
+		"message": "Donwload Server"
 	},
 	"options_tab_search": {
-		"message": "搜索相关"
+		"message": "Serach"
 	},
 	"options_tab_backup": {
-		"message": "备份/恢复"
+		"message": "Backup & Recovery"
 	},
 	"options_tab_help": {
-		"message": "帮助/说明"
+		"message": "Help"
 	},
 	"options_button_save_all": {
 		"message": "全部保存"
@@ -54,7 +54,7 @@
 		"message": "取消"
 	},
 	"options_button_import": {
-		"message": "导入"
+		"message": "新增"
 	},
 	"options_text_defalut_server": {
 		"message": "默认下载服务器："
@@ -94,44 +94,7 @@
 	},
 	"options_text_site_type_list": {
 		"message": "当前站点类型列表"
-	},
-	"options_text_site_type_name": {
-		"message": "名称："
-	},
-	"options_text_site_type_search_page": {
-		"message": "搜索页面："
-	},
-	"options_text_site_type_result_type": {
-		"message": "返回类型："
-	},
-	"options_text_site_type_result_type_text": {
-		"message": "文本"
-	},
-	"options_text_site_type_get_search_result_script": {
-		"message": "获取搜索结果脚本："
-	},
-	"options_text_site_type_get_total_size_script": {
-		"message": "获取种子大小脚本："
-	},
-	"options_text_site_type_get_total_size_script_tips": {
-		"message": "(种子列表页)"
-	},
-	"options_text_table_head_no": {
-		"message": "序号"
-	},
-	"options_text_table_head_name": {
-		"message": "名称"
-	},
-	"options_text_table_head_action": {
-		"message": "操作"
-	},
-	"options_text_table_head_name": {
-		"message": "名称"
-	},
-	"options_text_table_head_name": {
-		"message": "名称"
-	},
-	
+	},	
 	"popup_search_torrent": {
 		"message": "搜索种子"
 	},
