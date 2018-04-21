@@ -11,3 +11,4 @@ Gruntfile.js
 *.zip
 
 .idea/
+backup/
