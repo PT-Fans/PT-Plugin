@@ -78,15 +78,22 @@ let system = {
         // 2. 给各种按钮增加监听策略
         // 2.1 左侧导航条激活效果及各页面切换
         $("ul.nav > li").click(function () {
+            let tag = $(this);
+            let target_select = tag.find("a").attr("data-target");
+
             $("ul.nav > li.active").removeClass("active");
             $("div[id^='tab']").hide();
-            let tag = $(this);
+
             tag.addClass("active");
-            $(tag.find("a").attr("data-target")).show();
-            scrollTo(0,0);
+
+            $(target_select).show();
+
+            if (!window.location.search) window.location.search += "?tab=overview-personal-info";
+            history.pushState({}, null, window.location.href.replace(/tab=[^&]+/,`tab=${target_select.slice(5)}`));
         });
 
-        $("ul.nav > li:eq(0)").click();
+        let target = (window.location.search.match(/tab=([^&#]+)/) || ["","overview-personal-info"])[1];
+        $(`ul.nav > li > a[data-target='#tab-${target}']`).click();
 
 
         // 2.2 总览

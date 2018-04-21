@@ -13,6 +13,7 @@
   "permissions": [
     "tabs",
     "*://*/*",
+    "cookies",
     "clipboardRead",
     "clipboardWrite",
     "storage",
@@ -24,7 +25,7 @@
     "64": "static/icon/icon-64.png",
     "128": "static/icon/icon-128.png"
   },
-  "options_page": "options.html",
+  "options_page": "options.html?tab=overview-personal-info",
   "background": {
     "scripts": [
       "static/lib/jquery/jquery-1.11.0.min.js"
