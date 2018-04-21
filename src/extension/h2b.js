@@ -52,11 +52,9 @@
         ubb2html(){
             $.getScript("static/lib/htmlconverter/bbcode2html.js", () => {
                 let converter = new XBBCODE().process({
-                    text: $("#h2b-bbcode").val(),
-                    removeMisalignedTags: false,
-                    addInLineBreaks: false
+                    text: $("#h2b-bbcode").val()
                 });
-                H2B.editor.html(converter.html);
+                H2B.editor.html(converter.html.replace(/\n/ig,"<br>"));
             });
         },
 
