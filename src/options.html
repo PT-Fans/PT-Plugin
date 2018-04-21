@@ -40,8 +40,8 @@
             <hr>
             <h3>参数设置</h3>
             <ul class="nav nav-secondary nav-stacked">
+                <li><a href="#" data-target="#tab-config-rules">基本设置</a></li>
                 <li><a href="#" data-target="#tab-config-bt-clients">远程下载</a></li>
-                <li><a href="#" data-target="#tab-config-page-rules">页面规则</a></li>
                 <li><a href="#" data-target="#tab-config-sites">站点设定</a></li>
                 <li><a href="#" data-target="#tab-config-backup">备份/恢复</a></li>
                 <li><a href="#" data-target="#tab-help">帮助/说明</a></li>
@@ -98,15 +98,9 @@
                 <h1 class="page-header">图片批量转存</h1>
             </div>
             <!-- 参数设置 -->
-            <div id="tab-config-bt-clients" class="top-nav">
-                <h1 class="page-header">远程下载</h1>
-                <p class="hl-green">
-                    添加你的远程下载工具（PT客户端）到本处，你就可以在种子页面使用本工具提供的Popup以及右键菜单向远程下载工具快速添加种子。<br>
-                    目前支持的客户端有： <strong>Transmission</strong>、<strong>µTorrent</strong>、<strong>Deluge</strong>
-                </p>
-            </div>
-            <div id="tab-config-page-rules" class="top-nav">
-                <h1 class="page-header">页面规则</h1>
+            <div id="tab-config-rules" class="top-nav">
+                <h1 class="page-header">基本设置</h1>
+                <h2>页面规则</h2>
                 <p class="hl-green">
                     在这里用正则匹配式的形式添加站点页面匹配支持，适配的页面会添加Popup辅助按钮。<br>
                     默认情况下已经能满足使用，如果你<strong>不懂正则表达式，切勿随意修改！</strong>
@@ -131,6 +125,13 @@
                         </td>
                     </tr>
                 </table>
+            </div>
+            <div id="tab-config-bt-clients" class="top-nav">
+                <h1 class="page-header">远程下载</h1>
+                <p class="hl-green">
+                    添加你的远程下载工具（PT客户端）到本处，你就可以在种子页面使用本工具提供的Popup以及右键菜单向远程下载工具快速添加种子。<br>
+                    目前支持的客户端有： <strong>Transmission</strong>、<strong>µTorrent</strong>、<strong>Deluge</strong>
+                </p>
             </div>
             <div id="tab-config-sites" class="top-nav">
                 <h1 class="page-header">站点设定</h1>
@@ -189,9 +190,11 @@
                 <h2>感谢</h2>
                 <p>本项目至少使用/借鉴了以下开源项目代码或实现形式，在此表示感谢</p>
                 <ul>
-                    <li>ZUI - 开源HTML5跨屏框架 及其提供的插件库： <a href="https://github.com/easysoft/zui/" target="_blank">https://github.com/easysoft/zui/</a></li>
-                    <li>Rhilip/PT-help - 自建自用PT站辅助API：<a href="https://github.com/Rhilip/PT-help" target="_blank">https://github.com/Rhilip/PT-help</a></li>
-                    <li>brix/crypto-js - JavaScript library of crypto standards.: <a href="https://github.com/brix/crypto-js" target="_blank">https://github.com/brix/crypto-js</a></li>
+                    <li><strong>ZUI</strong>： <a href="https://github.com/easysoft/zui/" target="_blank">https://github.com/easysoft/zui/</a>, 开源HTML5跨屏框架 及其提供的插件库</li>
+                    <li><strong>Rhilip/PT-help</strong>：<a href="https://github.com/Rhilip/PT-help" target="_blank">https://github.com/Rhilip/PT-help</a>, 自建自用PT站辅助API</li>
+                    <li><strong>brix/crypto-js</strong>: <a href="https://github.com/brix/crypto-js" target="_blank">https://github.com/brix/crypto-js</a>, JavaScript library of crypto standards.</li>
+                    <li><strong>tengattack/html2bbcode.js</strong>: <a href="https://github.com/tengattack/html2bbcode.js" target="_blank">https://github.com/tengattack/html2bbcode.js</a>, Convert HTML to BBCode</li>
+                    <li><strong>cburschka/xbbcode.js</strong>: <a href="https://github.com/cburschka/xbbcode.js" target="_blank">https://github.com/cburschka/xbbcode.js</a>, JavaScript version of XBBCode</li>
                 </ul>
                 <h2>捐助</h2>
 

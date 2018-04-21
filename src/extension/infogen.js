@@ -1,8 +1,6 @@
 (function($) {
     let Gen = {
-
-        html: `
-<div id="tab-extension-infogen" class="top-nav">
+        html: `<div id="tab-extension-infogen" class="top-nav">
     <h1 class="page-header">种子简介生成</h1>
     <p class="hl-green">
         从豆瓣、Bangumi、Steam等站点获取信息并生成符合PT站简介需求的种子简介。
@@ -39,9 +37,9 @@
                 <textarea class="form-control" rows=20 id="gen-output"></textarea>
             </div>
         </div>
-
     </div>
 </div>`,
+
         search: {
             help_table_text: `<thead><tr><th></th></tr></thead><tbody><tr><td></td></tr>`,  // 子方法请重写该变量
             clean() {
@@ -70,7 +68,7 @@
             bangumi() {
                 $.getJSON(`https://api.bgm.tv/search/subject/${Gen.key()}?responseGroup=large&max_results=20&start=0`, resj => {
                     let tp_dict = {1: "漫画/小说", 2: "动画/二次元番", 3: "音乐", 4: "游戏", 6: "三次元番"};
-                    if (resj.results !== 0) {
+                    if (resj.code !== 404 && resj.results !== 0) {
                         Gen.search.help_table_text = resj.list.reduce((a,i_item) => {
                             let name = i_item.name_cn ? `${i_item.name_cn} | ${i_item.name}` : i_item.name;
                             return a+= `<tr><td class="nobr">${i_item.air_date}</td><td class="nobr">${tp_dict[i_item.type]}</td><td>${name}</td><td class="nobr"><a href="${i_item.url}" target="_blank">${i_item.url}</a></td><td class="nobr"><a href="javascript:void(0);" class="gen-search-choose" data-url="${i_item.url}">选择</a></td></tr>`
@@ -80,7 +78,6 @@
                         system.showErrorMessage("Bangumi搜索未返回有效数据。");
                     }
                 });
-                Gen.search.clean();
             }, // Bangumi搜索相关
             steam() {
                 $.ajax({
@@ -308,40 +305,58 @@
                 })
             }  // IMDb 链接
             else if (subject_url.match(/\/\/(bgm\.tv|bangumi\.tv|chii\.in)\/subject/)) {
-                // 以下Bgm相关解析修改自 `https://github.com/Rhilip/PT-help/blob/master/docs/js/Bangumi%20-%20Info%20Export.user.js` 对此表示感谢a
-                const STAFFSTART = 4;                 // 读取Staff栏的起始位置（假定bgm的顺序为中文名、话数、放送开始、放送星期... ，staff从第四个 导演 起算）；初始值为 4（对于新番比较合适）
-                const STAFFNUMBER = 9;                // 读取Staff栏数目；初始9，可加大，溢出时按最大可能的staff数读取，如需读取全部请设置值为 Number.MAX_VALUE (或一个你觉得可能最大的值 eg.20)
+                // 以下Bgm相关解析修改自以下脚本，对此表示感谢：
+                // - https://github.com/Rhilip/PT-help/blob/master/docs/js/Bangumi%20-%20Info%20Export.user.js
+                // - https://greasyfork.org/scripts/39367-byrbt-bangumi-info
 
                 $.get(subject_url,function (data) {
                     let parser = html_parser(data);
+                    let img,story,staff,cast;
+                    img = "https:" + parser.page.find("img.cover").attr("src").replace(/cover\/[lcmsg]/, "cover/l");
+                    story = (parser.page.find('#subject_summary').html() || '')
+                        .split('<br>')
+                        .map(html => $('<p>').html(html).text().trim())
+                        .join("\n");
 
-                    let img = parser.page.find("div#bangumiInfo > div > div:nth-child(1) > a > img").attr("src").replace(/cover\/[lcmsg]/, "cover/l");
+                    let staff_box = parser.page.find("ul#infobox");
+                    let staff_li = staff_box.find('a').closest('li');
 
-                    // 主介绍
-                    let story = parser.page.find("div#subject_summary").text();             // Story
-                    let raw_staff = [], staff_box = parser.page.find("ul#infobox");        // Staff
-                    for (let staff_number = STAFFSTART; staff_number < Math.min(STAFFNUMBER + STAFFSTART, staff_box.children("li").length); staff_number++) {
-                        raw_staff[staff_number - STAFFSTART] = staff_box.children("li").eq(staff_number).text();
-                        //console.log(raw_staff[staff_number]);
-                    }
-                    let raw_cast = [], cast_box = parser.page.find("ul#browserItemList");      // TODO fix multi-Cast
-                    for (let cast_number = 0; cast_number < cast_box.children("li").length; cast_number++) {    //cast_box.children("li").length
-                        let cast_name = cast_box.children("li").eq(cast_number).find("span.tip").text();
-                        if (!(cast_name.length)) {     //如果不存在中文名，则用cv日文名代替
-                            cast_name = cast_box.children("li").eq(cast_number).find("div > strong > a").text().replace(/(^\s*)|(\s*$)/g, "");   //#browserItemList > li > div > strong > a
+                    staff_box.find('a').each(function () {
+                        let a = $(this);
+                        let t = a.attr('title');
+                        if (t) a.text(t.trim());
+                    });
+                    staff = staff_box.find('li').slice(staff_li.first().index(), staff_li.last().index() + 1).map((i,item) => {
+                        let li = $(item);
+                        let tip = li.find('.tip');
+                        let key = tip.text().replace(': ', '');
+                        tip.remove();
+                        let val = li.text();
+                        return `${key}：${val}`;
+                    }).get().slice(0, 9);
+
+                    let cast_box = parser.page.find("ul#browserItemList");
+                    cast = cast_box.find("li").map((i,item) => {
+                        let li = $(item);
+                        let cast_name = li.find("span.tip").text();
+                        if (!cast_name.length) {
+                            cast_name = li.find("div > strong > a").text().replace(/(^\s*)|(\s*$)/g, "");
                         }
-                        let cv_name = cast_box.children("li").eq(cast_number).find("span.tip_j > a");
-                        raw_cast[cast_number] = cast_name + ' : ' + cv_name;
-                        //console.log(raw_cast[cast_number]);
+                        let cv_name = li.find("span.tip_j > a").map((i,item) => {return $(item).text()}).get().join(" / ");
+                        return `${cast_name} : ${cv_name}`
+                    }).get();
+
+                    function renderDescr() {
+                        let descr = "";
+                        descr += img ? `[img]${img}[/img]\n\n` : "";
+                        descr += story ? `【STORY】\n\n${story}\n\n` : "";
+                        descr += staff ? `【STAFF】\n${staff.join("\n")}\n\n` : "";
+                        descr += cast ? `【CAST】\n${cast.join("\n")}\n\n` : "";
+                        descr += "(简介信息来源于 " + subject_url + " )";
+                        Gen.output(descr);
                     }
 
-                    let outtext = "[img]" +  img + "[/img]\n\n" +
-                        "[b]STORY : [/b]\n" + story + "\n\n" +
-                        "[b]STAFF : [/b]\n" + raw_staff.join("\n") + "\n\n" +
-                        "[b]CAST : [/b]\n" + raw_cast.join("\n") + "\n\n" +
-                        "(来源于 " + subject_url + " )\n";
-
-                    Gen.output(outtext);
+                    renderDescr();
                 });
             }  // Bangumi链接
             else if (subject_url.match(/(store\.)?steam(powered|community)\.com\/app\/\d+/)) {
