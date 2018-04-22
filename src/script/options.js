@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 (function ($) {
 	var system = {
 		config: {
@@ -928,3 +929,12 @@
 		system.init();
 	});
 })(jQuery);
+=======
+(function($) {
+    $(document).ready(function() {
+        system.init();
+    });
+
+})(jQuery);
+
+>>>>>>> e32ceb964fab26e2e06b2c90c1b53a4eaa36175f

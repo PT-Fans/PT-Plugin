@@ -9,3 +9,6 @@ Gruntfile.js
 *.pem
 *.crx
 *.zip
+
+.idea/
+backup/
