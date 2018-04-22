@@ -1,52 +1,46 @@
 {
-	"name": "__MSG_manifest_appName__",
-	"short_name": "__MSG_manifest_shortName__",
-	"version": "0.0.9",
-	"description": "__MSG_manifest_appDescription__",
-	"manifest_version": 2,
-	"default_locale": "zh_CN",
-	"browser_action": {
-		"default_icon": "icon-19.png",
-		"default_title": "__MSG_manifest_appName__",
-		"default_popup": "popup.html"
-	},
-	"permissions": [
-		"tabs",
-		"*://*/*",
-		"clipboardRead",
-		"clipboardWrite",
-		"storage",
-		"contextMenus"
-	],
-	"icons": {
-		"16": "icon.png",
-		"19": "icon-19.png",
-		"64": "icon-64.png",
-		"128": "icon-128.png"
-	},
-	"options_page": "options.html",
-	"background": {
-		"scripts": [
-			"jquery/jquery-1.9.1.min.js",
-			"script/public.js",
-			"script/plugin/Base64.js",
-			"script/plugin/transmission.js",
-			"script/plugin/utorrent.js",
-			"script/plugin/deluge.js",
-			"script/background.js"
-		]
-	},
-	"content_scripts": [{
-		"matches": [
-			"*://*/*"
-		],
-		"css": ["extension/base.css"],
-		"js": [
-			"jquery/jquery-1.9.1.min.js",
-			"script/public.js",
-			"script/plugin/Base64.js",
-			"extension/init.js"
-		]
-	}],
-	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "name": "__MSG_manifest_appName__",
+  "short_name": "__MSG_manifest_shortName__",
+  "version": "0.0.9",
+  "description": "__MSG_manifest_appDescription__",
+  "manifest_version": 2,
+  "default_locale": "zh_CN",
+  "homepage_url": "https://github.com/ronggang/PT-Plugin",
+  "browser_action": {
+    "default_icon": "static/icon/icon-19.png",
+    "default_title": "__MSG_manifest_appName__"
+  },
+  "permissions": [
+    "tabs",
+    "*://*/*",
+    "cookies",
+    "clipboardRead",
+    "clipboardWrite",
+    "storage",
+    "contextMenus"
+  ],
+  "icons": {
+    "16": "static/icon/icon.png",
+    "19": "static/icon/icon-19.png",
+    "64": "static/icon/icon-64.png",
+    "128": "static/icon/icon-128.png"
+  },
+  "options_page": "options.html?tab=overview-personal-info",
+  "background": {
+    "scripts": [
+      "static/lib/jquery/jquery-1.11.0.min.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "css": [],
+      "js": [
+        "static/lib/jquery/jquery-1.11.0.min.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' ; object-src 'self'"
 }

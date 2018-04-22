@@ -1,504 +1,218 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="zh-cn">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-	<title system-lang="options_title">参数设置</title>
-	<!-- 基础类库 -->
-	<link rel="stylesheet" href="jquery/jquery-ui-1.10.3.custom.min.css" />
-	<script type="text/javascript" src="jquery/jquery-1.9.1.min.js"></script>
-	<script type="text/javascript" src="jquery/jquery-ui-1.10.3.custom.min.js"></script>
-	<script type="text/javascript" src="script/plugin/FileSaver.js"></script>
-	<script type="text/javascript" src="script/options.js"></script>
-	<script type="text/javascript" src="i18n.js"></script>
-	<!-- -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PT 助手</title>
+    <!-- zui -->
+    <link href="static/css/zui.min.css" rel="stylesheet">
+    <link href="static/lib/datatable/zui.datatable.min.css" rel="stylesheet">
+    <link href="static/css/options.css" rel="stylesheet">
 </head>
-<style type="text/css">
-body {
-	font-family: 微软雅黑,宋体,arial, sans-serif;
-	margin: 10px;
-	font-size: 13px;
-}
-.contentBox {
-	padding: 5px;
-	text-align: left;
-	margin: 0px auto 0px auto;
-	height: auto;
-	width: 99%;
-}
-.contentBox-1 {
-	background-color: #ffffff;
-	border: 3px solid #aabbcc;
-	border-bottom-left-radius: 20px 20px;
-	border-bottom-right-radius: 20px 20px;
-	border-top-left-radius: 20px 20px;
-	border-top-right-radius: 20px 20px;
-	padding: 30px;
-	text-align: left;
-	margin: 50px auto 20px auto;
-	height: auto;
-	width: 600px;
-}
-h1 {
-	padding-left: 0px;
-	border-bottom: 2px dotted #c3c3c3;
-	color: #333333;
-	line-height: 28px;
-	font-size: 15px;
-}
-table {
-	width: 100%;
-}
-tr.head td {
-	text-align: center;
-	border-bottom: 1px dotted #c3c3c3;
-	border-right: 1px dotted #c3c3c3;
-	padding: 3px;
-}
-tbody.list td{
-	border-bottom: 1px dotted #c3c3c3;
-	border-right: 1px dotted #c3c3c3;
-}
-
-.title-bar {
-	padding:30px;
-	text-align:left;
-	border: 1px solid #aaa;
-	margin-bottom: 10px;
-	color:#555555;
-	padding-left: 75px;
-	background: url("icon-64.png") no-repeat 5px 10px;
-
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;	
-}
-
-.title {
-	font-size:20px;
-	color:#555555;
-	float: left;
-	width: 50%;
-}
-
-.button-bar{
-	padding-bottom: 0px;
-	text-align: right;
-	margin: -20px -20px -20px 0px;
-}
-a.tag {
-	padding: 5px;
-	color: #ffffff;
-	margin-right: 5px;
-	text-decoration: none;
-	background-color: #CA3B3B;
-}
-#version {
-	padding: 5px;
-	font-size: 10px;
-}
-
-#version::before {
-	content: "v";
-}
-
-.toptips{
-  display:none;
-  position:fixed;
-  -webkit-transform:translateZ(0);
-          transform:translateZ(0);
-  top:0;
-  left:0;
-  right:0;
-  padding:5px;
-  font-size:14px;
-  text-align:center;
-  color:#FFF;
-  z-index:5000;
-  word-wrap:break-word;
-  word-break:break-all;
-}
-.toptips_success{
-  background-color:#1AAD19;
-}
-.toptips_warn{
-  background-color:#E64340;
-}
-</style>
 <body>
-<div class="contentBox">
-	<div class="title-bar">
-		<div class="title"><span system-lang="manifest_appName">PT 助手</span> - <span system-lang="options_title">参数设置</span><sup id="version"></sup></div>
-		<div class="button-bar">
-			<button id="button-save" system-lang="options_button_save_all">全部保存</button><br/>
-			<button id="button-save-and-close" system-lang="options_button_save_and_close">保存并关闭</button>
-		</div>
-	</div>
-	<div id="tabs">
-		<ul>
-			<li><a href="#tab-base" system-lang="options_tab_normal">常规</a></li>
-			<li><a href="#tab-rules" system-lang="options_tab_rules">规则</a></li>
-			<li><a href="#tab-site-types" system-lang="options_tab_site_types">站点类型</a></li>
-			<li><a href="#tab-sites" system-lang="options_tab_sites">站点设置</a></li>
-			<li><a href="#tab-clients" system-lang="options_tab_clients">下载服务器</a></li>
-			<li><a href="#tab-search" system-lang="options_tab_search">搜索相关</a></li>
-			<li><a href="#tab-backup" system-lang="options_tab_backup">备份/恢复</a></li>
-			<li><a href="#tab-help" system-lang="options_tab_help">帮助/说明</a></li>
-		</ul>
-		<div id="tab-base">
-			<h1 system-lang="options_tab_normal">常规</h1>
-			<table>
-				<tr>
-					<td system-lang="options_text_defalut_server">默认下载服务器：</td>
-					<td>
-						<select id="defaultclient">
-							<option value="transmission" selected="selected">Transmission</option>
-							<option value="utorrent">µTorrent</option>
-							<option value="deluge">Deluge</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td system-lang="options_text_show_plugin_icon_page">插件图标显示页面：</td>
-					<td>
-						<textarea style="width:100%" rows="6" id="pluginIconShowPages" savedtoclear="1"></textarea>
-						<span system-lang="options_text_show_plugin_icon_page_tips">多个页面用回车分隔</span>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2"><h1></h1></td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="checkbox" id="droptosend"/><label for="droptosend" system-lang="options_text_allow_drop_to_send">启用拖放链接到插件图标时，直接发送链接到下载服务器</label>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="checkbox" id="exceedSizeToConfirm"/><label for="exceedSizeToConfirm" system-lang="options_text_exceed_size_to_confirm">当前页面种子总体积超过</label>
-						<input id="exceedSize" style="width:50px;"/>
-						<select id="exceedSizeUnit">
-							<option value="MB">MB</option>
-							<option value="GB" selected="selected">GB</option>
-							<option value="TB">TB</option>
-						</select>
-						<label system-lang="options_text_exceed_size_to_confirm_1">时，需要我确认。</label>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="checkbox" id="allowSelectionTextSearch"/><label for="allowSelectionTextSearch" system-lang="options_text_selection_text_search">启用页面内容选择搜索</label>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="tab-rules">
-			<h1 system-lang="options_text_page_rules">页面规则</h1>
-			<table>
-				<tr>
-					<td width="30%" system-lang="options_text_torrent_page_rules">种子列表页面规则：</td>
-					<td width="70%" colspan="2">
-						<textarea style="width:100%" rows="6" id="torrentListPages" savedtoclear="1"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td system-lang="options_text_torrent_detail_page_rules">种子详情页面规则：</td>
-					<td colspan="2">
-						<textarea style="width:100%" rows="6" id="torrentDetailPages" savedtoclear="1"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td system-lang="options_text_torrent_links_rules">种子链接规则：</td>
-					<td colspan="2">
-						<textarea style="width:100%" rows="6" id="torrentLinks" savedtoclear="1"></textarea>
-					</td>
-				</tr>
-			</table>
-			<span system-lang="options_text_page_rules_tips">多个规则用回车分隔</span>
-		</div>
-		<div id="tab-site-types">
-			<h1><span system-lang="options_text_site_type_list">当前站点类型列表</span> <button id="button-add-new-site-type" system-lang="options_button_addNew">新增</button> <button id="button-add-import-site-type" system-lang="options_button_import">导入</button></h1>
-			<div id="table-site-type" style="display:none;">
-				<table style="width:100%;">
-					<tr>
-						<td system-lang="options_text_site_type_name" style="width:10%;">名称：</td>
-						<td style="width:40%;"><input type="text" id="name" savedtoclear="1" style="width:120px;"/></td>
-						<td style="width:10%;"></td>
-						<td style="width:40%;"></td>
-					</tr>
-					<tr>
-						<td system-lang="">插件图标显示页面：</td>
-						<td colspan="3"><textarea style="width:100%" rows="3" id="pluginIconShowPages" savedtoclear="1"></textarea></td>
-					</tr>
-					<tr>
-						<td system-lang="">种子列表页面：</td>
-						<td colspan="3"><textarea style="width:100%" rows="3" id="torrentListPages" savedtoclear="1"></textarea></td>
-					</tr>
-					<tr>
-						<td system-lang="">种子详情页面：</td>
-						<td colspan="3"><textarea style="width:100%" rows="3" id="torrentDetailPages" savedtoclear="1"></textarea></td>
-					</tr>
-					<tr>
-						<td system-lang="">种子链接页面：</td>
-						<td colspan="3"><textarea style="width:100%" rows="3" id="torrentLinks" savedtoclear="1"></textarea></td>
-					</tr>
-					<tr>
-						<td system-lang="options_text_site_type_search_page">搜索页面：</td>
-						<td><input type="text" id="searchPage" savedtoclear="1" style="width:100%;" /></td>
-						<td system-lang="options_text_site_type_result_type">返回类型：</td>
-						<td>
-							<select id="searchResultType">
-								<option value="html">HTML</option>
-								<option value="xml">XML</option>
-								<option value="json">JSON</option>
-								<option value="text" system-lang="options_text_site_type_result_type_text">文本</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td system-lang="options_text_site_type_get_search_result_script">获取搜索结果脚本：</td>
-						<td colspan="3"><textarea style="width:100%" rows="20" id="getSearchResultScript" savedtoclear="1"></textarea></td>
-					</tr>
-					<tr>
-						<td><span system-lang="options_text_site_type_get_total_size_script">获取种子大小脚本：</span><br/><span system-lang="options_text_site_type_get_total_size_script_tips">(种子列表页)</span></td>
-						<td colspan="3"><textarea style="width:100%" rows="3" id="getTorrentTotalSizeScript" savedtoclear="1"></textarea></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="3">
-							<button id="button-site-type-save" system-lang="options_button_save">保存</button>
-							<button id="button-site-type-cancel" system-lang="options_button_cancel">取消</button>
-						</td>
-					</tr>
-				</table>
-				<h1></h1>
-			</div>
-			<div style="max-height:400px;overflow:auto;">
-				<table width="100%">
-					<thead>
-						<tr class="head">
-							<td width="50px;" system-lang="options_text_table_head_no">序号</td>
-							<td system-lang="options_text_table_head_name">名称</td>
-							<td system-lang="options_text_table_head_action">操作</td>
-						</tr>
-					</thead>
-					<tbody id="tbody-site-types" class="list">
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div id="tab-sites">
-			<div id="table-site" style="display:none;">
-				<h1 system-lang="options_tab_sites">站点配置</h1>
-				<table >
-					<tr>
-						<td system-lang="options_text_site">站点：</td>
-						<td><input type="text" id="site" savedtoclear="1" style="width:120px;"/><input type="checkbox" id="disableHttps"/><label for="disableHttps">本站不支持HTTPS</label></td>
-						<td>类型：</td>
-						<td><select id="type"></select></td>
-					</tr>
-					<tr>
-						<td>密钥：</td>
-						<td><input type="text" id="passkey" savedtoclear="1" style="width:280px;" /></td>
-						<td>允许搜索：</td>
-						<td><input type="checkbox" id="allowSearch" /><label for="allowSearch">启用</label></td>
-					</tr>
-					<tr>
-						<td>标签：</td>
-						<td colspan="3"><div id="siteTags"></div></td>
-					</tr>
-					<tr>
-						<td>脚本1：</td>
-						<td colspan="3"><textarea style="width:100%" rows="3" id="listAllTorrentUrlScript" savedtoclear="1"></textarea></td>
-					</tr>				
-					<tr>
-						<td>脚本2：</td>
-						<td colspan="3"><textarea style="width:100%" rows="3" id="detailScript" savedtoclear="1"></textarea></td>
-					</tr>
-					<tr>
-						<td>脚本3：</td>
-						<td colspan="3"><textarea style="width:100%" rows="3" id="dropScript" savedtoclear="1"></textarea></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan="3">
-							<button id="button-site-save">保存</button>
-							<button id="button-site-cancel">取消</button>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="4">
-							<ul>
-								<li>站点不需要填写 http:// 或 https:// ，只需要填写域名，如：open.cd ；</li>
-								<li>密钥用于生成种子页面的下载链接；</li>
-								<li>关于脚本，如果是 NexusPHP 架构的站点，一般情况下无需填写；</li>
-								<li>脚本1：用于获取种子列表页面所有种子下载链接；</li>
-								<li>脚本2：用于获取种子详情页面当前种子下载链接；</li>
-								<li>脚本3：用于获取种子列表页面拖放种子链接时，获取下载链接；（右键复制地址到剪切板共用这个脚本）</li>
-							</ul>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<h1>当前站点列表 <button id="button-add-new-site">新增</button> <button id="button-add-import-site" system-lang="options_button_import">导入</button></h1>
-			<div style="max-height:400px;overflow:auto;">
-				<table width="100%">
-					<thead>
-						<tr class="head">
-							<td width="50px;">序号</td>
-							<td>站点</td>
-							<td>类型</td>
-							<td>标签</td>
-							<td>搜索</td>
-							<td>不支持HTTPS</td>
-							<td>操作</td>
-						</tr>
-					</thead>
-					<tbody id="tbody-sites" class="list">
-					</tbody>
-				</table>
-			</div>
-			<h1></h1>
-		</div>
-		<div id="tab-clients" style="padding:2px;">
-			<div style="padding:5px;">说明：服务器地址需要带上 http:// 或 https:// ，如：http://192.168.1.1；</div>
-			<ul>
-				<li><a href="#tab-transmission">Transmission</a></li>
-				<li><a href="#tab-utorrent">µTorrent</a></li>
-				<li><a href="#tab-deluge">Deluge</a></li>
-			</ul>
-			<div id="tab-transmission">
-				<h1>服务器</h1>
-				<table id="table-transmission-options">
-					<tr>
-						<td>地址：</td>
-						<td><input type="text" id="server"/></td>
-						<td>端口：</td>
-						<td><input type="text" id="port"/></td>
-					</tr>
-					<tr>
-						<td>用户名：</td>
-						<td><input type="text" id="username"/></td>
-						<td>密码：</td>
-						<td><input type="password" id="password"/></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td><input type="checkbox" id="autostart"/><label for="autostart">自动开始下载新增加的种子</label></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
-				<h1>当前目录对应列表</h1>
-				<table>
-					<tr>
-						<td>站点：</td>
-						<td><input type="text" id="site" savedtoclear="1" style="width:120px;"/></td>
-						<td>保存目录：</td>
-						<td><input type="text" id="folder" savedtoclear="1" style="width:200px;" /></td>
-						<td><button id="button-add-new-site-folder">添加</button></td>
-					</tr>
-				</table>
-				<ul>
-					<li>站点不需要填写 http:// 或 https:// ，只需要填写域名，如：open.cd ；</li>
-					<li>保存目录为当前站点对应的默认目录，添加新种子时，会自动指定到这个目录；</li>
-					<li>如果站点下不添加任何目录，则以服务器设置的默认目录为准；</li>
-				</ul>
-				<h1></h1>
-				<div style="max-height:260px;overflow:auto;">
-					<table width="100%">
-						<thead>
-							<tr class="head">
-								<td width="50px;">序号</td>
-								<td>站点</td>
-								<td>保存目录</td>
-								<td>默认</td>
-								<td>操作</td>
-							</tr>
-						</thead>
-						<tbody id="tbody-site-folders" class="list">
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div id="tab-utorrent">
-				<h1>服务器</h1>
-				<table id="table-utorrent-options">
-					<tr>
-						<td>地址：</td>
-						<td><input type="text" id="server"/></td>
-						<td>端口：</td>
-						<td><input type="text" id="port"/></td>
-					</tr>
-					<tr>
-						<td>用户名：</td>
-						<td><input type="text" id="username"/></td>
-						<td>密码：</td>
-						<td><input type="password" id="password"/></td>
-					</tr>
-				</table>
-				<h1></h1>
-				<div>
-					注：µTorrent 所有参数（如下载目录、是否自动开始等）以服务器上的设置为准。
-				</div>
-			</div>
-			<div id="tab-deluge">
-				<h1>服务器</h1>
-				<table id="table-deluge-options">
-					<tr>
-						<td>地址：</td>
-						<td><input type="text" id="server"/></td>
-						<td>端口：</td>
-						<td><input type="text" id="port"/></td>
-					</tr>
-					<tr>
-						<td>密码：</td>
-						<td><input type="password" id="password"/></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
-				<h1></h1>
-				<div>
-					注：Deluge 所有参数（如下载目录、是否自动开始等）以服务器上的设置为准。
-				</div>
-			</div>			
-		</div>
-		<div id="tab-search">
-			<h1>搜索参数</h1>
-			<table id="table-search-type-tag">
-				<tr>
-					<td>每站返回：</td>
-					<td><input type="text" id="rows"/>个</td>
-				</tr>
-				<tr>
-					<td>分类标签：</td>
-					<td><input type="text" id="tag"/><button id="button-add-search-type-tag">增加</button></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>
-						<div id="search-type-tags" style="padding: 5px 0px;"></div>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="tab-backup">
-			<button id="button-config-bak">备份设置</button>
-			<button id="button-config-restore-selectfile">恢复设置</button>
-			<button id="button-config-sync-save">将当前设置同步至google帐户</button>
-			<button id="button-config-sync-get">从google帐户恢复设置</button>
-			<input type="file" id="file-restore" name="file-restore" style="display:none;"/>
-			<h1></h1>
-			<div>
-				注：备份文件为明文，其中可能包含个人信息，请注意保管。
-			</div>
-		</div>
-		<div id="tab-help">
-			<div>详细说明请参考：<a href="https://github.com/ronggang/PT-Plugin/wiki">PT 助手 Wiki</a></div>
-		</div>
-	</div>
-	<button id="button-close" style="display:none;">关闭</button>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header title-bar">
+            <div class="navbar-brand title">PT 助手<sup id="version"></sup></div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <h3>总览</h3>
+            <ul class="nav nav-secondary nav-stacked">
+                <li><a href="#" data-target="#tab-overview-personal-info">个人信息</a></li>
+                <li><a href="#" data-target="#tab-overview-reports" >信息报表</a></li>
+            </ul>
+            <hr>
+            <h3>扩展插件</h3>
+            <ul class="nav nav-secondary nav-stacked">
+                <li><a href="#" data-target="#tab-extension-rssboard">新种聚合（RSS聚合）</a></li>
+                <li><a href="#" data-target="#tab-extension-adv-search">多站聚合搜索</a></li>
+                <li><a href="#" data-target="#tab-extension-infogen">种子简介生成</a></li>
+                <li><a href="#" data-target="#tab-extension-h2b">HTML <-> BBCode</a></li>
+                <li><a href="#" data-target="#tab-extension-img-trans">图片批量转存</a></li>
+                <li><a href="#" data-target="#tab-extension-quicklink">快速链接</a></li>
+            </ul>
+            <hr>
+            <h3>参数设置</h3>
+            <ul class="nav nav-secondary nav-stacked">
+                <li><a href="#" data-target="#tab-config-rules">基本设置</a></li>
+                <li><a href="#" data-target="#tab-config-bt-clients">远程下载</a></li>
+                <li><a href="#" data-target="#tab-config-sites">站点设定</a></li>
+                <li><a href="#" data-target="#tab-config-backup">备份/恢复</a></li>
+                <li><a href="#" data-target="#tab-help">帮助/说明</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <!-- 总览 -->
+            <div id="tab-overview-personal-info" class="top-nav">
+                <h1 class="page-header">个人信息</h1>
+                <table class="table datatable">
+                    <thead>
+                    <tr>
+                        <!-- 以下两列左侧固定 -->
+                        <th>站点名称</th>
+                        <th>UID</th>
+
+                        <!-- 以下中间可滚动 -->
+                        <th class="flex-col" data-width="100">昵称</th>
+                        <th class="flex-col" data-width="200">上传量</th>
+                        <th class="flex-col" data-width="200">下载量</th>
+                        <th class="flex-col" data-width="300">分享率</th>
+                        <th class="flex-col" data-width="300">魔力/积分</th>
+                        <th class="flex-col" data-width="300">保种数</th>
+                        <th class="flex-col" data-width="100">保种体积</th>
+                        <th class="flex-col" data-width="100">入站天数</th>
+                        <th class="flex-col" data-width="100">做种天数</th>
+                        <th class="flex-col" data-width="100">下载天数</th>
+                        <th class="flex-col" data-width="100">当前等级</th>
+
+                        <!-- 以下列右侧固定 -->
+                        <th>更新时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div id="tab-overview-reports" class="top-nav">
+                <h1 class="page-header">信息报表</h1>
+            </div>
+            <!-- 扩展插件 -->
+            <div id="extension"></div>
+            <div id="tab-extension-rssboard" class="top-nav">
+                <h1 class="page-header">新种聚合（RSS聚合）</h1>
+            </div>
+            <div id="tab-extension-adv-search" class="top-nav">
+                <h1 class="page-header">多站聚合搜索</h1>
+            </div>
+
+            <div id="tab-extension-quicklink" class="top-nav">
+                <h1 class="page-header">快速链接</h1>
+            </div>
+            <div id="tab-extension-img-trans" class="top-nav">
+                <h1 class="page-header">图片批量转存</h1>
+            </div>
+            <!-- 参数设置 -->
+            <div id="tab-config-rules" class="top-nav">
+                <h1 class="page-header">基本设置</h1>
+                <h2>页面规则</h2>
+                <p class="hl-green">
+                    在这里用正则匹配式的形式添加站点页面匹配支持，适配的页面会添加Popup辅助按钮。<br>
+                    默认情况下已经能满足使用，如果你<strong>不懂正则表达式，切勿随意修改！</strong>
+                </p>
+                <table class="table tv">
+                    <tr>
+                        <td>种子列表页面规则：</td>
+                        <td>
+                            <textarea class="form-control" rows="6" id="torrentListPages" savedtoclear="1" title="torrentListPages"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>种子详情页面规则：</td>
+                        <td>
+                            <textarea class="form-control" rows="6" id="torrentDetailPages" savedtoclear="1" title="torrentDetailPages"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>种子链接规则：</td>
+                        <td>
+                            <textarea class="form-control" rows="6" id="torrentLinks" savedtoclear="1"  title="torrentLinks"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="tab-config-bt-clients" class="top-nav">
+                <h1 class="page-header">远程下载</h1>
+                <p class="hl-green">
+                    添加你的远程下载工具（PT客户端）到本处，你就可以在种子页面使用本工具提供的Popup以及右键菜单向远程下载工具快速添加种子。<br>
+                    目前支持的客户端有： <strong>Transmission</strong>、<strong>µTorrent</strong>、<strong>Deluge</strong>
+                </p>
+            </div>
+            <div id="tab-config-sites" class="top-nav">
+                <h1 class="page-header">站点设定</h1>
+            </div>
+            <div id="tab-config-backup" class="top-nav">
+                <h1 class="page-header">备份/恢复</h1>
+                <p class="hl-green">导出属于你个人的脚本设置，以方便通过文件（可加密）或Google云的形式实现多机同步。</p>
+                <table class="table tv">
+                    <tbody>
+                    <tr>
+                        <td><h4>文件</h4></td>
+                        <td>
+                            <p class="hl-yellow">
+                                如果不输入加密密钥，则备份文件为明文，其中可能泄漏个人信息；如果输入加密密钥，则使用AES算法对文本进行对称加密。<br>
+                                请注意：加密密钥并不会以任何形式存储在插件配置中，请妥善保存。
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-control has-label-left has-label-left-lg">
+                                        <input id="input-backup-key" type="text" class="form-control" placeholder="一定强度的字符串（建议10-32位）" minlength="10" maxlength="32">
+                                        <label for="input-backup-key" class="input-control-label-left">加密密钥:</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <p></p>
+                            <button id="button-config-backup-file" class="btn">备份设置</button>
+                            <button id="button-config-backup-selectfile" class="btn">恢复设置</button>
+                            <input type="file" id="file-config" name="file-config" style="display:none;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h4>Google 云</h4></td>
+                        <td><button id="button-config-sync-save" class="btn">将当前设置同步至google帐户</button>
+                            <button id="button-config-sync-get" class="btn">从google帐户恢复设置</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h1 class="page-header">重置</h1>
+                <p class="hl-red">重置脚本所有设定到初始状态，如非必要请勿点击。</p>
+                <table class="table tv">
+                    <tbody>
+                    <tr>
+                        <td><h4>重置设定</h4></td>
+                        <td>
+                            <button id="button-config-restore-default" class="btn">重置到默认状态</button>
+                            <button id="button-config-restore-clean" class="btn">重置到空白状态</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="tab-help" class="top-nav">
+                <h1 class="page-header">帮助/说明</h1>
+                <h2>插件说明</h2>
+                <h2>感谢</h2>
+                <p>本项目至少使用/借鉴了以下开源项目代码或实现形式，在此表示感谢</p>
+                <ul>
+                    <li><strong>ZUI</strong>： <a href="https://github.com/easysoft/zui/" target="_blank">https://github.com/easysoft/zui/</a>, 开源HTML5跨屏框架 及其提供的插件库</li>
+                    <li><strong>Rhilip/PT-help</strong>：<a href="https://github.com/Rhilip/PT-help" target="_blank">https://github.com/Rhilip/PT-help</a>, 自建自用PT站辅助API</li>
+                    <li><strong>brix/crypto-js</strong>: <a href="https://github.com/brix/crypto-js" target="_blank">https://github.com/brix/crypto-js</a>, JavaScript library of crypto standards.</li>
+                    <li><strong>tengattack/html2bbcode.js</strong>: <a href="https://github.com/tengattack/html2bbcode.js" target="_blank">https://github.com/tengattack/html2bbcode.js</a>, Convert HTML to BBCode</li>
+                    <li><strong>cburschka/xbbcode.js</strong>: <a href="https://github.com/cburschka/xbbcode.js" target="_blank">https://github.com/cburschka/xbbcode.js</a>, JavaScript version of XBBCode</li>
+                </ul>
+                <h2>捐助</h2>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- 依赖库 -->
+<script src="static/lib/jquery/jquery-1.11.0.min.js"></script> <!-- jQuery (ZUI中的Javascript组件依赖于jQuery) -->
+<script src="static/lib/crypto/crypto-js.min.js"></script>
+<script src="static/lib/clipboard/clipboard.min.js"></script>
+<script src="static/lib/filesaver/FileSaver.js"></script>
+<script src="static/lib/zui/zui.min.js"></script>
+<script src="static/lib/datatable/zui.datatable.min.js"></script>
+
+<script src="script/options.js"></script>
+<script src="script/system.js"></script>
+
 </body>
 </html>
